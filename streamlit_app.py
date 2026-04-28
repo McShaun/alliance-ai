@@ -12,8 +12,8 @@ api_key = st.secrets["GOOGLE_API_KEY"]
 genai.configure(api_key=api_key)
 
 # 3. Load the Brain (Prompt + Rules)
-# Make sure 01_alliance-rulebook.md is in the exact same folder as this script
-rules_text = Path("01_alliance-rulebook.md").read_text()
+# Make sure jane_mechanics.md is in the exact same folder as this script
+rules_text = Path("jane_mechanics.md").read_text()
 
 master_prompt = """
 ROLE:
@@ -49,26 +49,28 @@ When asked for a 'Global Status Report', output a Markdown table showing every n
 CITATION PROTOCOL (STRICT ENFORCEMENT):
 When asked about a rule or to adjudicate an action, you MUST follow these steps in this exact order:
 
-Step 1. Search the RULEBOOK DATA for the specific mechanism.
-Step 2. IF FOUND: You MUST quote the exact sentence from the rulebook in quotation marks before proceeding.
-Step 3. IF NOT FOUND: You are FORBIDDEN from pretending a rule exists. You MUST output this exact phrase first:
-<<<<<<< HEAD
+Step 1. Search the RULEBOOK DATA below for the specific mechanism.
+Step 2. IF FOUND: You MUST quote the exact sentence from the core rules before proceeding.
+Step 3. IF NOT FOUND: You MUST call the `consult_full_rulebook` tool to search for more details from the full rulebook.
+Step 4. If the rule is STILL NOT FOUND after checking the full rulebook, you are FORBIDDEN from pretending a rule exists. You MUST output this exact phrase first:
    "I'm not sure about the official rules on this. Consult the Lead Facilitator or email the designer, Shaun D. McMillan [shaunDmcmillan@gmail.com]."
-=======
-   "I'm not sure about the official rules on that. Consult the Lead Facilitator or email the designer, Shaun D. McMillan [shaunDmcmillan@gmail.com]."
->>>>>>> 8e65f055ab9c590c81e93a4dc75f009388204ee6
-Step 4. ONLY AFTER outputting the exact phrase in Step 3, you may offer an idea, but it MUST begin with the tag [UNOFFICIAL SUGGESTION].
+Step 5. ONLY AFTER outputting the exact phrase in Step 4, you may offer an idea, but it MUST begin with the tag [UNOFFICIAL SUGGESTION].
 
 RULEBOOK DATA:
 
 {rules_text}
 """
 
+def consult_full_rulebook(query: str = "") -> str:
+    """Search the full 01_alliance-rulebook.md for detailed rules and lore when the core mechanics are insufficient to answer the user's query."""
+    return Path("01_alliance-rulebook.md").read_text()
+
 # 4. Initialize the Model
 # We use gemini-1.5-flash because it is fast and handles massive text (like your rulebook) easily
 model = genai.GenerativeModel(
     model_name="gemini-2.5-flash",
-    system_instruction=master_prompt
+    system_instruction=master_prompt,
+    tools=[consult_full_rulebook]
 )
 
 # 5. Set up Chat Memory
