@@ -53,7 +53,7 @@ RULEBOOK DATA:
 # 4. Initialize the Model
 # We use gemini-1.5-flash because it is fast and handles massive text (like your rulebook) easily
 model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
+    model_name="gemini-2.5-flash",
     system_instruction=master_prompt
 )
 
