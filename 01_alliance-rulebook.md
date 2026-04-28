@@ -2,7 +2,7 @@
 The objective of this game is for all of the players to achieve world peace by bringing their nation-teams’ many conflicting geopolitical agendas to some sort of resolution without being at war with one another within 4 hours or some predetermined set of sessions. Then, using their experience in the game, they can have a robust discussion about the challenges of being a world leader. 
 
 # How many players can play? 
-3-15 Players or 15-72 players. With the additional teams and bigger map you can have as many as 72 players. This truly is a megagame. I even ran it once with 100 players at Gen Con, America’s biggest board game convention.  
+3-15 Players or 15-72 players. With the additional teams and bigger map you can have as many as 72 players.  
 
 20-45 minutes per session (includes at least 1 Game Day)
 
