@@ -6,6 +6,9 @@ from pathlib import Path
 st.set_page_config(page_title="ALLIANCE Adjudicator", page_icon="🌍", layout="centered")
 st.title("ALLIANCE: Global Adjudication Terminal")
 
+with st.sidebar:
+    offline_debug_mode = st.checkbox('Offline Debug Mode')
+
 # 2. Secure the API Key
 # This pulls the key you saved in the Streamlit Secrets menu
 api_key = st.secrets["GOOGLE_API_KEY"]
@@ -94,5 +97,8 @@ if user_input:
     
     # Send it to Jane and get the response
     with st.chat_message("assistant"):
-        response = st.session_state.chat_session.send_message(user_input)
-        st.markdown(response.text)
+        if offline_debug_mode:
+            st.markdown(f"DEBUG MODE: Jane is offline. You submitted: {user_input}")
+        else:
+            response = st.session_state.chat_session.send_message(user_input)
+            st.markdown(response.text)
