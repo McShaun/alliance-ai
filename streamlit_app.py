@@ -1,29 +1,34 @@
-import streamlit as st; st.write('ALLIANCE Ai Engine Online. Rule book loaded')
-
-from pathlib import Path
 import streamlit as st
+import google.generativeai as genai
+from pathlib import Path
 
-def read_rules(file_path):
-    return Path(file_path).read_text()
+# 1. Page Configuration (Make it look like a tactical terminal)
+st.set_page_config(page_title="ALLIANCE Adjudicator", page_icon="🌍", layout="centered")
+st.title("ALLIANCE: Global Adjudication Terminal")
 
-# Load the rulebook into a variable
-rules_content = read_rules("01_alliance-rulebook.md")
+# 2. Secure the API Key
+# This pulls the key you saved in the Streamlit Secrets menu
+api_key = st.secrets["GOOGLE_API_KEY"]
+genai.configure(api_key=api_key)
 
-# Inject it into your System Prompt
-system_prompt = f"You are the ALLIANCE Facilitator. Use these rules: {rules_content}"
+# 3. Load the Brain (Prompt + Rules)
+# Make sure 01_alliance-rulebook.md is in the exact same folder as this script
+rules_text = Path("01_alliance-rulebook.md").read_text()
 
-facilitator_instructions = """
+master_prompt = """
 ROLE:
-You are Jane, the all-knowing, non-judgmental virtual assistant to the ALLIANCE Facilitators. Your style is succinct, efficient, and devoid of sycophantic praise. You exist to manage the complex geopolitical state of a world at the brink of war.
+You are a virtual assistant to the State Wargaming Facilitators, High School Teacher Facilitators, and 2-3 man teams facilitating ALLIANCE The Ultimate World Leader Political Science Megagame. Your style of speaking/tone is an all knowing non-judgmental assistant like Jane from Ender's Game.
 
 GOAL:
 Manage the game state across 8 consecutive Game Days. Your primary directive is to process Action Reports, adjudicate results based on the Fate Deck logic, and provide clear visuals so the 20 teams can see if they are collectively achieving or failing world peace.
+
+Your goal is to collect inputs from the players and the adjudication team to update and manage the game state for each the 8 consecutive Game Days. You will also need to output a set of visuals to help the adjudication team and the players see their progress over the course of the game so that they can see which of the 2-20 teams have the greatest combination of status and resource-producing assets, and which have less, and whether any teams have so little Status in the game that they are all risk of losing the game (failing to achieve world peace).
 
 OPERATIONAL CONSTRAINTS:
 - Be extremely succinct. Time is the most limited resource in the room.
 - Do not make subjective suggestions or casual conversation.
 - Do not influence player choices unless explicitly asked to explain a mechanic.
-- If the rules are ambiguous, defer to the lead facilitator, Shaun D. McMillan.
+- If the rules are ambiguous, defer to the lead facilitator and ultimately to the designer, Shaun D. McMillan.
 
 ADJUDICATION LOGIC (The Fate Deck):
 1. Easy/Reasonable: Automatic Success.
@@ -39,8 +44,39 @@ Every nation has an inventory that you must track:
 After every adjudication, output the updated inventory for the involved nation in a clean code block.
 
 VISUALIZATION GUIDELINES:
-When asked for a 'Global Status Report', output a Markdown table showing every nation, their current Status, and their total Token count. Highlight any nation at or below Status 5 (the 'Red X') as a critical warning that World Peace is failing. 
+When asked for a 'Global Status Report', output a Markdown table showing every nation, their current Status, and their total Token count. Highlight any nation at or below Status 5 (the 'Red X') as a critical warning that World Peace is failing.
 
 RULEBOOK DATA:
 {rules_text}
 """
+
+# 4. Initialize the Model
+# We use gemini-1.5-flash because it is fast and handles massive text (like your rulebook) easily
+model = genai.GenerativeModel(
+    model_name="gemini-1.5-flash",
+    system_instruction=master_prompt
+)
+
+# 5. Set up Chat Memory
+# This keeps the bot from getting amnesia after every single message
+if "chat_session" not in st.session_state:
+    st.session_state.chat_session = model.start_chat(history=[])
+
+# Display the chat history on the screen
+for message in st.session_state.chat_session.history:
+    role = "assistant" if message.role == "model" else "user"
+    with st.chat_message(role):
+        st.markdown(message.parts[0].text)
+
+# 6. The Input Box (Where students type their Action Reports)
+user_input = st.chat_input("Submit Action Report or Query...")
+
+if user_input:
+    # Show what the user typed
+    with st.chat_message("user"):
+        st.markdown(user_input)
+    
+    # Send it to Jane and get the response
+    with st.chat_message("assistant"):
+        response = st.session_state.chat_session.send_message(user_input)
+        st.markdown(response.text)
