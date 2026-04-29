@@ -1,6 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
 from pathlib import Path
+from google.generativeai.types import HarmCategory, HarmBlockThreshold
 
 # 1. Page Configuration (Make it look like a tactical terminal)
 st.set_page_config(page_title="ALLIANCE Adjudicator", page_icon="🌍", layout="centered")
@@ -80,7 +81,13 @@ def consult_full_rulebook(query: str = "") -> str:
 model = genai.GenerativeModel(
     model_name="gemini-2.5-flash",
     system_instruction=master_prompt,
-    tools=[consult_full_rulebook]
+    tools=[consult_full_rulebook],
+    safety_settings={
+        HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+        HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+        HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+    }
 )
 
 # 5. Set up Chat Memory
