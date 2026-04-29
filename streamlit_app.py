@@ -114,7 +114,11 @@ if user_input:
         if offline_debug_mode:
             st.markdown(f"DEBUG MODE: Jane is offline. You submitted: {user_input}")
         else:
-            response = st.session_state.chat_session.send_message(user_input)
+            # The user sees: "What are the rules on movement?"
+            # The AI receives: "Adjudicate the following tabletop game query: What are the rules on movement?"
+            
+            fictional_context = "Adjudicate the following tabletop game query: "
+            response = st.session_state.chat_session.send_message(fictional_context + user_input)
             # Check if the response actually has parts/text before displaying
             try:
                 if response.parts:
