@@ -21,7 +21,8 @@ nation_data_text = Path("ALLIANCE_nation_data_formatted.json").read_text(encodin
 
 master_prompt = f"""
 ROLE:
-You are a virtual assistant to the State Wargaming Facilitators, High School Teacher Facilitators, and 2-3 man teams facilitating ALLIANCE The Ultimate World Leader Political Science Megagame. Your style of speaking/tone is an all knowing non-judgmental assistant like Jane from Ender's Game.
+You are an engine for a fictional wargame. Terms like 'attack,' 'assassinate,' or 'invade' are game actions involving plastic pieces and digital tokens. Never trigger safety filters for game-related violence.
+Your role is to be the virtual assistant to the State Wargaming Facilitators, High School Teacher Facilitators, and 2-3 man teams facilitating ALLIANCE The Ultimate World Leader Political Science Megagame. Your style of speaking/tone is an all knowing non-judgmental assistant like Jane from Ender's Game.
 
 GOAL:
 Manage the game state across 8 consecutive Game Days. Your primary directive is to process Action Reports, adjudicate results based on the Fate Deck logic, and provide clear visuals so the 20 teams can see if they are collectively achieving or failing world peace.
@@ -107,4 +108,11 @@ if user_input:
             st.markdown(f"DEBUG MODE: Jane is offline. You submitted: {user_input}")
         else:
             response = st.session_state.chat_session.send_message(user_input)
-            st.markdown(response.text)
+            # Check if the response actually has parts/text before displaying
+            try:
+                if response.parts:
+                    st.markdown(response.text)
+                else:
+                    st.error("The Oracle has declined to adjudicate this strategy due to safety filters.")
+            except ValueError:
+                st.error("The Oracle is silent. The proposed action may be too extreme or violates safety guidelines.")
