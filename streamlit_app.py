@@ -2,6 +2,17 @@ import streamlit as st
 import google.generativeai as genai
 from pathlib import Path
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
+import shutil
+import json
+
+def initialize_new_game():
+    """Copies alliance_master.json to alliance_active.json for a new session."""
+    shutil.copy("alliance_master.json", "alliance_active.json")
+    if "chat_session" in st.session_state:
+        del st.session_state.chat_session
+
+if not Path("alliance_active.json").exists():
+    initialize_new_game()
 
 # 1. Page Configuration (Make it look like a tactical terminal)
 st.set_page_config(page_title="ALLIANCE Adjudicator", page_icon="🌍", layout="centered")
@@ -9,6 +20,10 @@ st.title("ALLIANCE: Global Adjudication Terminal")
 
 with st.sidebar:
     offline_debug_mode = st.checkbox('Offline Debug Mode')
+    if st.button('Reset Game'):
+        initialize_new_game()
+        st.success("Game reset to initial state!")
+        st.rerun()
 
 # 2. Secure the API Key
 # This pulls the key you saved in the Streamlit Secrets menu
@@ -18,7 +33,7 @@ genai.configure(api_key=api_key)
 # 3. Load the Brain (Prompt + Rules)
 # Make sure jane_mechanics.md is in the exact same folder as this script
 rules_text = Path("jane_mechanics.md").read_text(encoding="utf-8")
-nation_data_text = Path("ALLIANCE_nation_data_formatted.json").read_text(encoding="utf-8")
+nation_data_text = Path("alliance_active.json").read_text(encoding="utf-8")
 
 with open("oracle_skills.md", "r", encoding="utf-8") as f:
     master_prompt = f.read().format(
@@ -26,16 +41,70 @@ with open("oracle_skills.md", "r", encoding="utf-8") as f:
         rules_text=rules_text
     )
 
+master_prompt += "\n\nCRITICAL INSTRUCTION: You are the ALLIANCE Oracle. You MUST use the update_alliance_ledger tool for all transactions and token deductions."
+
 def consult_full_rulebook(query: str = "") -> str:
     """Search the full 01_alliance-rulebook.md for detailed rules and lore when the core mechanics are insufficient to answer the user's query."""
     return Path("01_alliance-rulebook.md").read_text()
+
+def update_alliance_ledger(team_name: str, token_type: str, amount: int) -> str:
+    """
+    Updates the active ledger with token deductions. Must ONLY read/write alliance_active.json.
+    Args:
+        team_name: The title of the nation (e.g., 'Fast-Growing Nation').
+        token_type: The type of token (e.g., 'green tokens', 'red tokens', 'white tokens', 'black tokens', 'blue tokens').
+        amount: The integer amount to deduct.
+    Returns:
+        String indicating success or failure.
+    """
+    ledger_path = Path("alliance_active.json")
+    if not ledger_path.exists():
+        return "Failure: Active ledger not found."
+    
+    try:
+        with open(ledger_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            
+        team_found = False
+        for nation in data:
+            if nation.get("title", "").strip().lower() == team_name.lower():
+                team_found = True
+                token_updated = False
+                for i in ["1st", "2nd", "3rd", "4th"]:
+                    key_num = f"num-of-token_{i}"
+                    key_name = f"@{i}_token"
+                    if nation.get(key_name, "").strip().lower() == token_type.lower():
+                        current_amount_str = nation.get(key_num, "0").strip()
+                        current_amount = int(current_amount_str) if current_amount_str else 0
+                        
+                        if current_amount >= amount:
+                            nation[key_num] = str(current_amount - amount)
+                            token_updated = True
+                            break
+                        else:
+                            return f"Failure: {team_name} does not have enough {token_type}. Required: {amount}, Available: {current_amount}."
+                
+                if token_updated:
+                    break
+                else:
+                    return f"Failure: {team_name} does not have {token_type}."
+                    
+        if not team_found:
+            return f"Failure: Team {team_name} not found."
+            
+        with open(ledger_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4)
+            
+        return f"Success: Deducted {amount} {token_type} from {team_name}."
+    except Exception as e:
+        return f"Failure: An error occurred - {str(e)}"
 
 # 4. Initialize the Model
 # We use gemini-1.5-flash because it is fast and handles massive text (like your rulebook) easily
 model = genai.GenerativeModel(
     model_name="gemini-2.5-flash",
     system_instruction=master_prompt,
-    tools=[consult_full_rulebook],
+    tools=[consult_full_rulebook, update_alliance_ledger],
     safety_settings={
         HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
         HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
