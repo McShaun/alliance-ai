@@ -26,7 +26,7 @@ def optimize_image(input_path):
 images_to_optimize = [
     "graphics/logos/ALLIANCE Logo with background.png",
     "graphics/components/tokens.png",
-    "graphics/components/action-report_face.png"
+    "graphics/components/action-report.png"
 ]
 
 crisis_dir = "graphics/components/crisis"
