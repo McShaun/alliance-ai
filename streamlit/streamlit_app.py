@@ -10,7 +10,16 @@ CURRENT_DIR = Path(__file__).parent
 
 def initialize_new_game():
     """Copies alliance_master.json to alliance_active.json for a new session."""
-    shutil.copy(CURRENT_DIR / "alliance_master.json", CURRENT_DIR / "alliance_active.json")
+    import os
+
+    # Get the directory that THIS script is actually in
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    master_path = os.path.join(current_dir, "alliance_master.json")
+    active_path = os.path.join(current_dir, "alliance_active.json")
+
+    # Now copy using the absolute paths
+    shutil.copy(master_path, active_path)
+    
     if "chat_session" in st.session_state:
         del st.session_state.chat_session
 
