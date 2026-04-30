@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import google.generativeai as genai
 from pathlib import Path
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
@@ -15,7 +16,27 @@ if not Path("alliance_active.json").exists():
     initialize_new_game()
 
 # 1. Page Configuration (Make it look like a tactical terminal)
-st.set_page_config(page_title="ALLIANCE Adjudicator", page_icon="🌍", layout="centered")
+st.set_page_config(page_title="ALLIANCE Adjudicator", page_icon="🌍", layout="wide", initial_sidebar_state="collapsed")
+
+# Hide Streamlit Chrome and remove padding
+st.markdown("""
+<style>
+    .block-container {
+        padding-top: 0rem;
+        padding-bottom: 0rem;
+        padding-left: 0rem;
+        padding-right: 0rem;
+        max-width: 100%;
+    }
+    header {visibility: hidden;}
+    footer {visibility: hidden;}
+</style>
+""", unsafe_allow_html=True)
+
+# Embed Dashboard HTML
+dashboard_html = Path("dashboard.html").read_text(encoding="utf-8")
+components.html(dashboard_html, height=2000, scrolling=True)
+
 st.title("ALLIANCE: Global Adjudication Terminal")
 
 with st.sidebar:
