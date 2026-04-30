@@ -6,13 +6,15 @@ from google.generativeai.types import HarmCategory, HarmBlockThreshold
 import shutil
 import json
 
+CURRENT_DIR = Path(__file__).parent
+
 def initialize_new_game():
     """Copies alliance_master.json to alliance_active.json for a new session."""
-    shutil.copy("alliance_master.json", "alliance_active.json")
+    shutil.copy(CURRENT_DIR / "alliance_master.json", CURRENT_DIR / "alliance_active.json")
     if "chat_session" in st.session_state:
         del st.session_state.chat_session
 
-if not Path("alliance_active.json").exists():
+if not (CURRENT_DIR / "alliance_active.json").exists():
     initialize_new_game()
 
 # 1. Page Configuration (Make it look like a tactical terminal)
@@ -34,8 +36,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Embed Dashboard HTML
-current_dir = Path(__file__).parent
-dashboard_html = (current_dir / "dashboard.html").read_text(encoding="utf-8")
+dashboard_html = (CURRENT_DIR / "dashboard.html").read_text(encoding="utf-8")
 components.html(dashboard_html, height=2000, scrolling=True)
 
 st.title("ALLIANCE: Global Adjudication Terminal")
@@ -54,10 +55,10 @@ genai.configure(api_key=api_key)
 
 # 3. Load the Brain (Prompt + Rules)
 # Make sure jane_mechanics.md is in the exact same folder as this script
-rules_text = Path("jane_mechanics.md").read_text(encoding="utf-8")
-nation_data_text = Path("alliance_active.json").read_text(encoding="utf-8")
+rules_text = (CURRENT_DIR / "jane_mechanics.md").read_text(encoding="utf-8")
+nation_data_text = (CURRENT_DIR / "alliance_active.json").read_text(encoding="utf-8")
 
-with open("oracle_skills.md", "r", encoding="utf-8") as f:
+with open(CURRENT_DIR / "oracle_skills.md", "r", encoding="utf-8") as f:
     master_prompt = f.read().format(
         nation_data_text=nation_data_text,
         rules_text=rules_text
@@ -67,7 +68,7 @@ master_prompt += "\n\nCRITICAL INSTRUCTION: You are the ALLIANCE Oracle. You MUS
 
 def consult_full_rulebook(query: str = "") -> str:
     """Search the full 01_alliance-rulebook.md for detailed rules and lore when the core mechanics are insufficient to answer the user's query."""
-    return Path("01_alliance-rulebook.md").read_text()
+    return (CURRENT_DIR / "01_alliance-rulebook.md").read_text()
 
 def update_alliance_ledger(team_name: str, token_type: str, amount: int) -> str:
     """
@@ -79,7 +80,7 @@ def update_alliance_ledger(team_name: str, token_type: str, amount: int) -> str:
     Returns:
         String indicating success or failure.
     """
-    ledger_path = Path("alliance_active.json")
+    ledger_path = CURRENT_DIR / "alliance_active.json"
     if not ledger_path.exists():
         return "Failure: Active ledger not found."
     
