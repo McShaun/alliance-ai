@@ -34,7 +34,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Embed Dashboard HTML
-dashboard_html = Path("dashboard.html").read_text(encoding="utf-8")
+current_dir = Path(__file__).parent
+dashboard_html = (current_dir / "dashboard.html").read_text(encoding="utf-8")
 components.html(dashboard_html, height=2000, scrolling=True)
 
 st.title("ALLIANCE: Global Adjudication Terminal")

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +9,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0f172a;
             color: #e2e8f0;
         }
+
         .tab-btn {
             transition: all 0.2s ease;
         }
+
         .tab-btn.active {
             border-bottom-width: 4px;
             border-color: #22d3ee;
@@ -23,13 +27,16 @@
             font-weight: 600;
             text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
         }
+
         .glow-border {
             box-shadow: 0 0 15px rgba(34, 211, 238, 0.15);
             border-color: #334155;
         }
+
         .glow-text {
             text-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
         }
+
         /* Custom Tooltip */
         .tooltip .tooltip-text {
             visibility: hidden;
@@ -49,6 +56,7 @@
             font-size: 0.875rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
+
         .tooltip .tooltip-text::after {
             content: "";
             position: absolute;
@@ -59,18 +67,21 @@
             border-style: solid;
             border-color: #334155 transparent transparent transparent;
         }
+
         .tooltip:hover .tooltip-text {
             visibility: visible;
             opacity: 1;
         }
-        
+
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 */
+            padding-bottom: 56.25%;
+            /* 16:9 */
             height: 0;
             overflow: hidden;
             max-width: 100%;
         }
+
         .video-container iframe {
             position: absolute;
             top: 0;
@@ -81,20 +92,25 @@
         }
     </style>
 </head>
+
 <body class="min-h-screen pb-12">
 
     <!-- Header -->
     <header class="bg-slate-800 glow-border shadow-sm border-b border-slate-700">
         <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col items-center">
-            <img src="static/logos/ALLIANCE Logo with background.webp" alt="ALLIANCE Logo" class="h-32 object-contain rounded shadow-sm">
+            <img src="static/logos/ALLIANCE Logo with background.webp" alt="ALLIANCE Logo"
+                class="h-32 object-contain rounded shadow-sm">
         </div>
-        
+
         <!-- Navigation -->
         <nav class="max-w-6xl mx-auto px-4 mt-2">
             <div class="flex space-x-8 border-b border-slate-700 justify-center">
-                <button class="tab-btn active pb-4 px-2 text-slate-400 hover:text-slate-200 font-medium" onclick="openTab('tab-intro', this)">Tutorial and Introduction</button>
-                <button class="tab-btn pb-4 px-2 text-slate-400 hover:text-slate-200 font-medium" onclick="openTab('tab-day1', this)">Game Day 1 Dashboard</button>
-                <button class="tab-btn pb-4 px-2 text-slate-400 hover:text-slate-200 font-medium" onclick="openTab('tab-day2', this)">Game Day 2 Dashboard</button>
+                <button class="tab-btn active pb-4 px-2 text-slate-400 hover:text-slate-200 font-medium"
+                    onclick="openTab('tab-intro', this)">Tutorial and Introduction</button>
+                <button class="tab-btn pb-4 px-2 text-slate-400 hover:text-slate-200 font-medium"
+                    onclick="openTab('tab-day1', this)">Game Day 1 Dashboard</button>
+                <button class="tab-btn pb-4 px-2 text-slate-400 hover:text-slate-200 font-medium"
+                    onclick="openTab('tab-day2', this)">Game Day 2 Dashboard</button>
             </div>
         </nav>
     </header>
@@ -103,35 +119,56 @@
         <!-- Page 1: Intro -->
         <div id="tab-intro" class="tab-content block">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="md:col-span-1 bg-slate-800 glow-border p-6 rounded-lg shadow-sm border border-slate-700 h-fit">
+                <div
+                    class="md:col-span-1 bg-slate-800 glow-border p-6 rounded-lg shadow-sm border border-slate-700 h-fit">
                     <h2 class="text-2xl font-bold mb-4 text-slate-100">Facilitator Setup Checklist</h2>
                     <ul class="space-y-3 mb-6">
                         <li class="flex items-start">
-                            <svg class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <svg class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
                             <span class="text-slate-300">Assign Nations to Players</span>
                         </li>
                         <li class="flex items-start">
-                            <svg class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <svg class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
                             <span class="text-slate-300">Distribute Starting Tokens</span>
                         </li>
                         <li class="flex items-start">
-                            <svg class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <svg class="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
                             <span class="text-slate-300">Provide Action Report forms</span>
                         </li>
                         <li class="flex items-start">
-                            <svg class="h-6 w-6 text-gray-300 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            <svg class="h-6 w-6 text-gray-300 mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13l4 4L19 7" />
+                            </svg>
                             <span class="text-slate-300">Ensure the Oracle AI is running</span>
                         </li>
                     </ul>
-                    <a href="#" class="block w-full text-center bg-cyan-600 hover:bg-cyan-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded transition-colors shadow-md text-lg">
+                    <a href="#"
+                        class="block w-full text-center bg-cyan-600 hover:bg-cyan-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded transition-colors shadow-md text-lg">
                         View Full Tutorial
                     </a>
                 </div>
-                
+
                 <div class="md:col-span-2 bg-slate-800 glow-border p-6 rounded-lg shadow-sm border border-slate-700">
                     <h2 class="text-2xl font-bold mb-4 text-slate-100">Welcome to ALLIANCE</h2>
                     <div class="video-container shadow-lg">
-                        <iframe src="https://www.youtube.com/embed/MBRw64xXPo0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/MBRw64xXPo0" title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -139,10 +176,13 @@
 
         <!-- Page 2: Day 1 -->
         <div id="tab-day1" class="tab-content hidden">
-            <div class="bg-slate-800 glow-border p-6 rounded-lg shadow-sm border border-slate-700 mb-8 max-w-4xl mx-auto">
+            <div
+                class="bg-slate-800 glow-border p-6 rounded-lg shadow-sm border border-slate-700 mb-8 max-w-4xl mx-auto">
                 <h2 class="text-2xl font-bold mb-4 text-center text-slate-100">Game Day 1 Timer</h2>
                 <div class="video-container shadow-lg">
-                    <iframe src="https://www.youtube.com/embed/k2yAq3ayBeE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/k2yAq3ayBeE" title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
                 </div>
             </div>
 
@@ -150,26 +190,35 @@
                 <!-- Tokens Section -->
                 <div class="bg-slate-800 glow-border p-6 rounded-lg shadow-sm border border-slate-700">
                     <h2 class="text-2xl font-bold mb-4 text-slate-100">Tokens Guide</h2>
-                    <img src="static/components/tokens.webp" alt="Game Tokens" class="w-full h-auto rounded-lg shadow-md mb-6 object-cover border border-slate-700">
-                    
+                    <img src="static/components/tokens.webp" alt="Game Tokens"
+                        class="w-full h-auto rounded-lg shadow-md mb-6 object-cover border border-slate-700">
+
                     <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div class="tooltip relative inline-block cursor-help bg-blue-900/40 border border-blue-700/50 text-blue-200 py-2 px-3 rounded text-center font-medium shadow-sm hover:shadow-md transition-shadow">
+                        <div
+                            class="tooltip relative inline-block cursor-help bg-blue-900/40 border border-blue-700/50 text-blue-200 py-2 px-3 rounded text-center font-medium shadow-sm hover:shadow-md transition-shadow">
                             Blue Token
-                            <span class="tooltip-text">Weapons Tech can be gambled to build weapons or win battles</span>
+                            <span class="tooltip-text">Weapons Tech can be gambled to build weapons or win
+                                battles</span>
                         </div>
-                        <div class="tooltip relative inline-block cursor-help bg-green-900/40 border border-green-700/50 text-green-200 py-2 px-3 rounded text-center font-medium shadow-sm hover:shadow-md transition-shadow">
+                        <div
+                            class="tooltip relative inline-block cursor-help bg-green-900/40 border border-green-700/50 text-green-200 py-2 px-3 rounded text-center font-medium shadow-sm hover:shadow-md transition-shadow">
                             Green Token
-                            <span class="tooltip-text">2 Finance Credit can be traded for one of any other color token</span>
+                            <span class="tooltip-text">2 Finance Credit can be traded for one of any other color
+                                token</span>
                         </div>
-                        <div class="tooltip relative inline-block cursor-help bg-slate-700 border border-slate-600 text-slate-100 py-2 px-3 rounded text-center font-medium shadow-sm hover:shadow-md transition-shadow border border-slate-500">
+                        <div
+                            class="tooltip relative inline-block cursor-help bg-slate-700 border border-slate-600 text-slate-100 py-2 px-3 rounded text-center font-medium shadow-sm hover:shadow-md transition-shadow border border-slate-500">
                             Black Token
-                            <span class="tooltip-text">Spend 1 Black and 1 Green to move a military outside your borders</span>
+                            <span class="tooltip-text">Spend 1 Black and 1 Green to move a military outside your
+                                borders</span>
                         </div>
-                        <div class="tooltip relative inline-block cursor-help bg-red-900/40 border border-red-700/50 text-red-200 py-2 px-3 rounded text-center font-medium shadow-sm hover:shadow-md transition-shadow">
+                        <div
+                            class="tooltip relative inline-block cursor-help bg-red-900/40 border border-red-700/50 text-red-200 py-2 px-3 rounded text-center font-medium shadow-sm hover:shadow-md transition-shadow">
                             Red Token
                             <span class="tooltip-text">Spend to build infrastructure or mass produce new science</span>
                         </div>
-                        <div class="tooltip relative inline-block cursor-help bg-slate-800 text-slate-300 py-2 border border-slate-600 px-3 rounded text-center font-medium shadow-sm border border-slate-700 hover:shadow-md transition-shadow">
+                        <div
+                            class="tooltip relative inline-block cursor-help bg-slate-800 text-slate-300 py-2 border border-slate-600 px-3 rounded text-center font-medium shadow-sm border border-slate-700 hover:shadow-md transition-shadow">
                             White Token
                             <span class="tooltip-text">Gamble to Invent New Technology</span>
                         </div>
@@ -178,38 +227,49 @@
 
                 <!-- First Turn Suggestions Section -->
                 <div class="bg-slate-800 glow-border p-6 rounded-lg shadow-sm border border-slate-700">
-                    <h1 class="text-3xl font-extrabold mb-6 text-cyan-400 glow-text border-b pb-2">First Turn Suggestions</h1>
-                    
+                    <h1 class="text-3xl font-extrabold mb-6 text-cyan-400 glow-text border-b pb-2">First Turn
+                        Suggestions</h1>
+
                     <div class="space-y-6">
                         <div>
                             <h2 class="text-xl font-bold text-slate-100 flex items-center">
-                                <span class="bg-cyan-600 hover:bg-cyan-500 text-white w-8 h-8 rounded-full inline-flex items-center justify-center mr-3 text-sm">1</span>
+                                <span
+                                    class="bg-cyan-600 hover:bg-cyan-500 text-white w-8 h-8 rounded-full inline-flex items-center justify-center mr-3 text-sm">1</span>
                                 Read Your National Agenda
                             </h2>
-                            <p class="ml-11 text-slate-300 mt-1">Try to achieve your initial objectives to make progress on the Status track.</p>
+                            <p class="ml-11 text-slate-300 mt-1">Try to achieve your initial objectives to make progress
+                                on the Status track.</p>
                         </div>
-                        
+
                         <div>
                             <h2 class="text-xl font-bold text-slate-100 flex items-center">
-                                <span class="bg-cyan-600 hover:bg-cyan-500 text-white w-8 h-8 rounded-full inline-flex items-center justify-center mr-3 text-sm">2</span>
+                                <span
+                                    class="bg-cyan-600 hover:bg-cyan-500 text-white w-8 h-8 rounded-full inline-flex items-center justify-center mr-3 text-sm">2</span>
                                 Prepare your first Action Report
                             </h2>
-                            <p class="ml-11 text-slate-300 mt-1">Based on the Secret Objectives on the back of your National Agenda, or come up with a unique agenda.</p>
+                            <p class="ml-11 text-slate-300 mt-1">Based on the Secret Objectives on the back of your
+                                National Agenda, or come up with a unique agenda.</p>
                         </div>
-                        
+
                         <div>
                             <h2 class="text-xl font-bold text-slate-100 flex items-center">
-                                <span class="bg-cyan-600 hover:bg-cyan-500 text-white w-8 h-8 rounded-full inline-flex items-center justify-center mr-3 text-sm">3</span>
+                                <span
+                                    class="bg-cyan-600 hover:bg-cyan-500 text-white w-8 h-8 rounded-full inline-flex items-center justify-center mr-3 text-sm">3</span>
                                 Find out What Your Neighbors Want
                             </h2>
-                            <p class="ml-11 text-slate-300 mt-1 mb-3">Maybe you have a surplus of Tokens that they have a deficiency in. Or perhaps you can pool your resources to achieve shared objectives.</p>
-                            
+                            <p class="ml-11 text-slate-300 mt-1 mb-3">Maybe you have a surplus of Tokens that they have
+                                a deficiency in. Or perhaps you can pool your resources to achieve shared objectives.
+                            </p>
+
                             <div class="ml-11 bg-slate-800/50 p-4 rounded border border-slate-700 space-y-3">
                                 <h3 class="text-lg font-bold text-slate-100">Form an ALLIANCE</h3>
-                                <p class="text-slate-300 text-sm">It's up to you to formalize your agreements. It might help to get something in writing.</p>
-                                
-                                <h3 class="text-lg font-bold text-slate-100 pt-2 border-t border-slate-700">Call a U.N. meeting</h3>
-                                <p class="text-slate-300 text-sm">Use this to settle disputes among multiple partners.</p>
+                                <p class="text-slate-300 text-sm">It's up to you to formalize your agreements. It might
+                                    help to get something in writing.</p>
+
+                                <h3 class="text-lg font-bold text-slate-100 pt-2 border-t border-slate-700">Call a U.N.
+                                    meeting</h3>
+                                <p class="text-slate-300 text-sm">Use this to settle disputes among multiple partners.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -217,14 +277,19 @@
             </div>
 
             <!-- Action Report Section -->
-            <div class="bg-slate-800 glow-border p-8 rounded-lg shadow-md border border-slate-700 flex flex-col md:flex-row items-center gap-8 bg-gradient-to-r from-slate-800 to-slate-900">
+            <div
+                class="bg-slate-800 glow-border p-8 rounded-lg shadow-md border border-slate-700 flex flex-col md:flex-row items-center gap-8 bg-gradient-to-r from-slate-800 to-slate-900">
                 <div class="w-full md:w-1/3 shrink-0">
-                    <img src="static/components/action-report.webp" alt="Action Report Form" class="w-full h-auto rounded shadow-lg border border-slate-700 rotate-1 hover:rotate-0 transition-transform duration-300">
+                    <img src="static/components/action-report.webp" alt="Action Report Form"
+                        class="w-full h-auto rounded shadow-lg border border-slate-700 rotate-1 hover:rotate-0 transition-transform duration-300">
                 </div>
                 <div class="w-full md:w-2/3">
-                    <h2 class="text-3xl font-extrabold text-cyan-400 glow-text mb-4">Please Submit your first Action Report</h2>
-                    <p class="text-lg text-slate-200 leading-relaxed border-l-4 border-cyan-400 pl-4 py-2 bg-slate-800 glow-border/60">
-                        Each team should choose a pre-written Action Report or fill out a blank Action Report and submit it to the Facilitator by the end of the Game Day.
+                    <h2 class="text-3xl font-extrabold text-cyan-400 glow-text mb-4">Please Submit your first Action
+                        Report</h2>
+                    <p
+                        class="text-lg text-slate-200 leading-relaxed border-l-4 border-cyan-400 pl-4 py-2 bg-slate-800 glow-border/60">
+                        Each team should choose a pre-written Action Report or fill out a blank Action Report and submit
+                        it to the Facilitator by the end of the Game Day.
                     </p>
                 </div>
             </div>
@@ -232,21 +297,30 @@
 
         <!-- Page 3: Day 2 -->
         <div id="tab-day2" class="tab-content hidden">
-            
+
             <div class="text-center mb-10">
-                <a href="https://docs.google.com/presentation/d/1dmt0-dBZTwvyVRvDaNsQF3-016Aet5I1yzGqkhh8d2o/edit?usp=sharing" target="_blank" class="inline-block bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 shadow-[0_0_20px_rgba(34,211,238,0.4)] text-white font-bold py-4 px-10 rounded-full shadow-lg transform transition-transform hover:-translate-y-1 text-xl">
+                <a href="https://docs.google.com/presentation/d/1dmt0-dBZTwvyVRvDaNsQF3-016Aet5I1yzGqkhh8d2o/edit?usp=sharing"
+                    target="_blank"
+                    class="inline-block bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 shadow-[0_0_20px_rgba(34,211,238,0.4)] text-white font-bold py-4 px-10 rounded-full shadow-lg transform transition-transform hover:-translate-y-1 text-xl">
                     <span class="flex items-center">
-                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z">
+                            </path>
+                        </svg>
                         Announcements Slideshow
                     </span>
                 </a>
             </div>
 
             <!-- Day 2 Timer -->
-            <div class="bg-slate-800 glow-border p-6 rounded-lg shadow-sm border border-slate-700 mb-8 max-w-4xl mx-auto">
+            <div
+                class="bg-slate-800 glow-border p-6 rounded-lg shadow-sm border border-slate-700 mb-8 max-w-4xl mx-auto">
                 <h2 class="text-2xl font-bold mb-4 text-center text-slate-100">Game Day 2 Timer</h2>
                 <div class="video-container shadow-lg">
-                    <iframe src="https://www.youtube.com/embed/iCFrCOY8i7k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/iCFrCOY8i7k" title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
                 </div>
             </div>
 
@@ -254,19 +328,27 @@
             <div class="bg-red-900/20 p-6 rounded-lg shadow-md border-2 border-red-800/50">
                 <div class="flex items-center mb-6">
                     <div class="bg-red-600 text-white rounded-full p-2 mr-3 shadow">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                            </path>
+                        </svg>
                     </div>
                     <h2 class="text-3xl font-extrabold text-red-400 glow-text">New Crisis!</h2>
                 </div>
-                
+
                 <div class="flex flex-col md:flex-row gap-8 items-start">
                     <div class="bg-slate-800 glow-border p-4 rounded shadow-sm w-full md:w-1/2 flex justify-center">
-                        <img id="crisis-image" src="" alt="Crisis Event Card" class="w-full h-auto max-h-[800px] object-contain rounded shadow-inner">
+                        <img id="crisis-image" src="" alt="Crisis Event Card"
+                            class="w-full h-auto max-h-[800px] object-contain rounded shadow-inner">
                     </div>
-                    
+
                     <div class="w-full md:w-1/2 mt-4 md:mt-0">
-                        <p class="text-xl md:text-2xl text-red-400 glow-text bg-slate-800 glow-border p-8 rounded border border-red-800/50 shadow-sm font-medium leading-relaxed">
-                            <span id="crisis-nation" class="font-bold text-red-400 glow-text">Rich Nation (U.S.A.)</span> must contend with this crisis. Please bring 3-5 Tokens of the appropriate color to the Facilitator or the Control Team to adjudicate.
+                        <p
+                            class="text-xl md:text-2xl text-red-400 glow-text bg-slate-800 glow-border p-8 rounded border border-red-800/50 shadow-sm font-medium leading-relaxed">
+                            <span id="crisis-nation" class="font-bold text-red-400 glow-text">Rich Nation
+                                (U.S.A.)</span> must contend with this crisis. Please bring 3-5 Tokens of the
+                            appropriate color to the Facilitator or the Control Team to adjudicate.
                         </p>
                     </div>
                 </div>
@@ -334,4 +416,5 @@
         });
     </script>
 </body>
+
 </html>
